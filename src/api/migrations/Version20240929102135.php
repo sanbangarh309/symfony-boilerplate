@@ -24,9 +24,11 @@ final class Version20240929102135 extends AbstractMigration
 
       $db->table('payments')
           ->column('id')->guid()->primaryKey()->comment('@UUID')
-          ->column('user_id')->references('users')->notNull()->unique()
+          ->column('user_id')->references('users')->notNull()
           ->column('amount')->float()->notNull()
           ->column('label')->string(255)->notNull()
+          ->column('latitude')->string(50)->notNull()
+          ->column('longitude')->string(50)->notNull()
           ->column('localization')->text()->null()
           //->timestamps();  this method is not working but mentioned in the documentation
           ->column('created_at')->datetime()
