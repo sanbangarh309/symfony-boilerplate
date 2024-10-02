@@ -33,6 +33,12 @@ schema:
           type: string
           length: 255
           not_null: true
+        latitude:
+          type: string
+          length: 50
+        longitude:
+          type: string
+          length: 50
         localization:
           type: text
           length: 0
