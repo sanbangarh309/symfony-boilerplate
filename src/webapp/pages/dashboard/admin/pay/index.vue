@@ -44,14 +44,23 @@
       >
         <template #cell(localization)="data">
           <b-button
-            v-if="!data.localization"
-            size="sm"
             variant="primary"
-            @click="updateLocation"
+            :disabled="loadingItemId === data.item.id"
+            v-if="!data.item.localization"
+            @click="updateLocation(data.item)"
           >
-            {{ $t('common.payments.localization.buttonLabel') }}
+            <b-spinner
+              v-if="loadingItemId === data.item.id"
+              small
+              type="grow"
+            ></b-spinner>
+            {{
+              loadingItemId === data.item.id
+                ? 'Loading...'
+                : $t('common.payments.localization.buttonLabel')
+            }}
           </b-button>
-          <span v-else>{{ data.localization }}</span>
+          <span v-else>{{ data.item.localization }}</span>
         </template>
         <template #table-busy>
           <div class="text-center my-2">
@@ -135,6 +144,7 @@ export default {
       sortByMap: {
         amount: AMOUNT,
       },
+      loadingItemId: null,
     }
   },
   methods: {
@@ -157,13 +167,26 @@ export default {
         this.$nuxt.error(e)
       }
     },
-    async updateLocation() {
-      const result = await this.$graphql.request(UpdateLocationMutation, {
-        id: '93124f0f-7e51-11ef-97f5-0242ac120007',
-        latitude: '29.969513',
-        longitude: '76.878281',
-      })
-      console.log('result', result)
+    async updateLocation(payment) {
+      this.loadingItemId = payment.id
+      try {
+        const {
+          updateLocation: { localization },
+        } = await this.$graphql.request(UpdateLocationMutation, {
+          id: payment.id,
+          latitude: payment.latitude,
+          longitude: payment.longitude,
+        })
+        const index = this.items.findIndex((object) => {
+          return object.id === payment.id
+        })
+        this.items[index].localization = localization
+      } catch (e) {
+        this.$nuxt.error(e)
+      } finally {
+        // Reset loading state
+        this.loadingItemId = null
+      }
     },
   },
 }
