@@ -124,6 +124,46 @@ abstract class BasePayment extends \TheCodingMachine\TDBM\AbstractTDBMObject imp
     }
 
     /**
+     * The getter for the "latitude" column.
+     *
+     * @return string|null
+     */
+    public function getLatitude() : ?string
+    {
+        return $this->get('latitude', 'payments');
+    }
+
+    /**
+     * The setter for the "latitude" column.
+     *
+     * @param string|null $latitude
+     */
+    public function setLatitude(?string $latitude) : void
+    {
+        $this->set('latitude', $latitude, 'payments');
+    }
+
+    /**
+     * The getter for the "longitude" column.
+     *
+     * @return string|null
+     */
+    public function getLongitude() : ?string
+    {
+        return $this->get('longitude', 'payments');
+    }
+
+    /**
+     * The setter for the "longitude" column.
+     *
+     * @param string|null $longitude
+     */
+    public function setLongitude(?string $longitude) : void
+    {
+        $this->set('longitude', $longitude, 'payments');
+    }
+
+    /**
      * The getter for the "localization" column.
      *
      * @return string|null
@@ -225,6 +265,8 @@ abstract class BasePayment extends \TheCodingMachine\TDBM\AbstractTDBMObject imp
         }
         $array['amount'] = $this->getAmount();
         $array['label'] = $this->getLabel();
+        $array['latitude'] = $this->getLatitude();
+        $array['longitude'] = $this->getLongitude();
         $array['localization'] = $this->getLocalization();
         $array['createdAt'] = $this->getCreatedAt()->format('c');
         $array['updatedAt'] = ($date = $this->getUpdatedAt()) ? $date->format('c') : null;
