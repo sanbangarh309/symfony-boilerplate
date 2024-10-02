@@ -124,6 +124,7 @@ services:
       MAIL_WEBAPP_UPDATE_PASSWORD_ROUTE_FORMAT: "%s/update-password/%s/%s" # {locale}/update-password/{resetPasswordTokenId}/{plainToken}
       # Debug
       XDEBUG_MODE: ${XDEBUG_MODE:-debug}
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
     volumes:
       - ./src/api:/var/www/html
     depends_on:
