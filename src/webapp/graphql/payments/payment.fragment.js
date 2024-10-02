@@ -6,6 +6,8 @@ export const PaymentFragment = gql`
     userName
     amount
     label
+    latitude
+    longitude
     localization
     createdAt
   }
