@@ -62,7 +62,6 @@ class PaymentDao extends BasePaymentDao
      */
     public function save(Payment $payment): void
     {
-        $this->validate($payment);
         parent::save($payment);
     }
 
