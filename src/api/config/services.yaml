@@ -83,3 +83,8 @@ services:
             $mailFromName: '%app.mail_from_name%'
             $mailWebappURL: '%app.mail_webapp_url%'
             $mailWebappUpdatePasswordRouteFormat: '%app.mail_webapp_update_password_route_format%'
+
+    # Services
+    App\Services\GoogleGeocodingService:
+        arguments:
+            $apiKey: '%env(GOOGLE_MAPS_API_KEY)%'
