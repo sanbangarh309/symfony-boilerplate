@@ -34,6 +34,8 @@ use const PASSWORD_DEFAULT;
 #[GraphQLite\SourceField(name: 'id', outputType: 'ID')]
 #[GraphQLite\SourceField(name: 'amount')]
 #[GraphQLite\SourceField(name: 'label')]
+#[GraphQLite\SourceField(name: 'latitude')]
+#[GraphQLite\SourceField(name: 'longitude')]
 #[GraphQLite\SourceField(name: 'localization')]
 #[GraphQLite\SourceField(name: 'createdAt')]
 #[GraphQLite\SourceField(name: 'userName')]
@@ -49,12 +51,16 @@ class Payment extends BasePayment
         parent::__construct(
             amount: $amount,
             label : $label,
+            latitude: $latitude,
+            longitude: $longitude,
             localization    : $localization, 
             createdAt   : $createdAt,
             user     : $user
         );
         $this->setAmount($amount);
         $this->setLabel($label);
+        $this->setLatitude($latitude);
+        $this->setLongitude($longitude);
         $this->setLocalization($localization);
         $this->setCreatedAt($createdAt);
         $this->setUser($user);
@@ -76,6 +82,24 @@ class Payment extends BasePayment
     public function getLabel(): string
     {
         return parent::getLabel();
+    }
+
+    /**
+     * @Assert\NotBlank(message="not_blank")
+     * @Assert\Length(max=255, maxMessage="max_length_255")
+     */
+    public function getLatitude(): string
+    {
+        return parent::getLatitude();
+    }
+
+    /**
+     * @Assert\NotBlank(message="not_blank")
+     * @Assert\Length(max=255, maxMessage="max_length_255")
+     */
+    public function getLongitude(): string
+    {
+        return parent::getLongitude();
     }
 
     /**
