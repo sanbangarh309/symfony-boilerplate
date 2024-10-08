@@ -44,6 +44,7 @@ export default {
       menu: {
         appMenu: {
           users: "Utilisateurs",
+          payments: "Paiements",
           page1: "page1",
           page2: "page2",
           validation: "validation",

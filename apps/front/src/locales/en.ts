@@ -38,6 +38,38 @@ export default {
         delete: "Delete",
       },
     },
+    payment: {
+      createForm: {
+        title: "Create a new payment",
+        ok: "Create",
+        buttonCancel: "Cancel",
+      },
+      updateForm: {
+        pending: "Loading payment",
+        title: "Update {amount}",
+        ok: "Update",
+      },
+      form: {
+        amount: "Amount",
+        label: "Payment Label",
+        latitude: "Latitude",
+        longitude: "Longitude",
+        buttonCancel: "Cancel",
+        ok: "Save",
+      },
+      list: {
+        createButton: "New payment",
+        pending: "Loading payments",
+        createdAt: "Created at",
+        amount: "Amount",
+        label: "Payment Label",
+        action: "Action",
+        edit: "Edit",
+        delete: "Delete",
+        identifyLocation: 'Identify Location',
+        setLocation: 'Set Location'
+      },
+    },
     layout: {
       appHeader: {
         welcome: "Welcome {username}",
@@ -45,6 +77,7 @@ export default {
       menu: {
         appMenu: {
           users: "Users",
+          payments: "Payments",
           page1: "page1",
           page2: "page2",
           validation: "validation",
@@ -79,6 +112,11 @@ export default {
     user: {
       index: {
         createButton: "Create an user",
+      },
+    },
+    payment: {
+      index: {
+        createButton: "Create an payment",
       },
     },
   },
