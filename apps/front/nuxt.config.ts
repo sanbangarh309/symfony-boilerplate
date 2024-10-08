@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
+import extendedRoutes from "./src/utils/extendedRoutes";
+import { RouteType } from "../types/ExtendedRoute";
 
 export default defineNuxtConfig({
   srcDir: "src/",
@@ -59,4 +61,9 @@ export default defineNuxtConfig({
     "src/assets/styles/main.scss",
   ],
   // ssr: false
+  // hooks: {
+  //   "pages:extend"(routes: RouteType[]) {
+  //     routes = extendedRoutes(routes);
+  //   },
+  // },
 });

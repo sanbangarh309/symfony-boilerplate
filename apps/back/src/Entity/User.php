@@ -22,6 +22,10 @@ class User implements UserInterface, \JsonSerializable, PasswordAuthenticatedUse
         private string $id,
         #[ORM\Column(length: 180, unique: true)]
         private string $email,
+
+        #[ORM\Column(unique: true)]
+        private int $user_id,
+
         #[ORM\Column]
         private array $roles = ['ROLE_USER'],
     ) {
@@ -30,6 +34,11 @@ class User implements UserInterface, \JsonSerializable, PasswordAuthenticatedUse
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user_id;
     }
 
     public function getEmail(): string
