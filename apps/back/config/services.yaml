@@ -75,3 +75,10 @@ services:
         class: OneLogin\Saml2\Auth
         arguments:
             $settings: "%app.sso.configuration%"
+
+    App\Serializer\CreatePaymentDtoDenormalizer:
+        tags: [ 'serializer.normalizer' ]
+    
+    App\Services\GoogleGeocodingService:
+        arguments:
+            $apiKey: '%env(GOOGLE_MAPS_API_KEY)%'
