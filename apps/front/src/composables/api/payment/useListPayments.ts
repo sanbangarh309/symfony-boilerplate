@@ -14,7 +14,7 @@ export default async function useListPayments() {
   });
 }
 
-export async function getLocations(paymentId: number) { console.log('fetch locationsssss', paymentId)
+export async function getLocations(paymentId: number) {
   return useAppFetch<Array<Locations>>(() => `/payments/locations/${paymentId}`, {
     key: "listLocations",
     method: GET,

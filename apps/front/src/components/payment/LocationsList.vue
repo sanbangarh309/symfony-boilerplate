@@ -4,7 +4,7 @@
     modal
     header="Locations List"
     :style="{ width: '25rem' }"
-    @hide="closeModal"
+    :closable="false"
   >
     <div class="flex items-center gap-4 mb-4">
       <Listbox

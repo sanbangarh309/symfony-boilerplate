@@ -1,24 +1,25 @@
 <template>
   <div>
-    <div
-      v-show="usersPending"
-      v-t="{ path: 'components.payment.list.pending' }"
-    ></div>
-    <div v-show="error">{{ error }}}</div>
-    {{ errorDelete }}
-    <DataTable :value="payments" stripedRows tableStyle="min-width: 50rem">
+    <DataTable :value="payments" stripedRows tableStyle="min-width: 50rem" key="id">
         <Column field="createdAt" :header="$t('components.payment.list.createdAt')"></Column>
         <Column field="amount" :header="$t('components.payment.list.amount')"></Column>
         <Column field="label" :header="$t('components.payment.list.label')"></Column>
         <Column field="localization" :header="$t('components.payment.list.action')">
           <template #body="slotProps">
-            <Button v-if="!slotProps.data.localization" type="button" @click="openModal(slotProps.data)" :label="$t(`components.payment.list.identifyLocation`)" icon="pi pi-search" :loading="loading" />
+            <Button
+              :key="slotProps.data.id"
+              v-if="!slotProps.data.localization"
+              type="button"
+              @click="openModal(slotProps.data)"
+              :label="$t(`components.payment.list.identifyLocation`)"
+              icon="pi pi-search"
+              :loading="loading[slotProps.data.id]"
+            />
             <span v-else v-text="slotProps.data.localization" />
           </template>
-          
         </Column>
     </DataTable>
-    <PaymentLocationsList v-model:modelValue="isModalVisible" :locations="locations" :payment="paymentObject" @update-payments="updatePayments" />
+    <PaymentLocationsList v-model:modelValue="isModalVisible" :locations="locations" :payment="paymentObject" @update-payments="loadPayments" />
   </div>
 </template>
 
@@ -32,33 +33,30 @@ import { getLocations } from "~/composables/api/payment/useListPayments";
 const isModalVisible = ref<boolean>(false);
 const locations = ref<{ name: string }[]>([]);
 const paymentObject = ref<Payment>({} as Payment);
+const payments = ref<Payment[]>([]);
+const loading = ref<boolean[]>([]);
+const error = ref<string | null>(null);
 
-  const loading = ref(false);
-
-const {
-  data: payments,
-  error,
-} = await useListPayments() || { data: [] };
-
+// Open modal and fetch locations
 const openModal = async (payment: Payment) => {
-  loading.value = true;
-  const { data } = await getLocations(payment.id);
-  locations.value = data?.value?.locations || []; // Update the reactive variable correctly
-  isModalVisible.value = true; // Show the modal
-  paymentObject.value = payment;
-  loading.value = false;
+  const paymentId = payment.id
+  loading.value[paymentId] = true; // Set loading state for this specific index
+  const { data } = await getLocations(paymentId);
+  locations.value = data?.value?.locations || [];
+  isModalVisible.value = true;
+  paymentObject.value = payment; // Use the payment directly from the payments array
+  loading.value[paymentId] = false; // Reset loading state after fetching
 };
 
-const updatePayments = async () => {
-  const {
-  data: payments,
-  error,
-} = await useListPayments() || { data: [] };
-
-  if (!error) {
-    payments.value = payments.value;
-  }
+// Load the payments data
+const loadPayments = async () => {
+  const { data, error } = await useListPayments();
+  payments.value = data?.value || [];
+  loading.value = new Array(data?.value.length).fill(false);
 };
+
+// Load payments on component setup
+await loadPayments();
 
 </script>
 
