@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use App\UseCase\Payment\CreatePaymentUseCase;
 use App\Dto\Request\Payment\CreatePaymentDto;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/payments')]
 class PaymentController extends AbstractController
@@ -22,13 +23,17 @@ class PaymentController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private readonly CreatePaymentUseCase $createPayment,
+        private Security $security
         )
     {}
 
     #[Route('', name: 'payment_index', methods: ['GET'])]
     public function index(SerializerInterface $serializer): Response
     {
-        $payments = $this->entityManager->getRepository(Payment::class)->findAll();
+        $user = $this->security->getUser();
+        $payments = $this->entityManager->getRepository(Payment::class)->findBy(
+            ['user_id' => $user->getUserId()]
+        );
         $data = $serializer->normalize($payments, 'json');
         return new JsonResponse($data, 200);
     }
