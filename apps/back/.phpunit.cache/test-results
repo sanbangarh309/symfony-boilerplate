@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Controller\\UserControllerTest::testCreateUser":5,"UseCase\\CreatePaymentTest::testCreatePayment":5,"UseCase\\CreateUserTest::testCreateUser":5},"times":{"Controller\\UserControllerTest::testCreateUser":3.622,"UseCase\\CreatePaymentTest::testCreatePayment":0.014,"UseCase\\CreateUserTest::testCreateUser":0.007}}

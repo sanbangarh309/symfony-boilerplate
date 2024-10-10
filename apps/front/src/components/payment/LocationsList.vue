@@ -27,7 +27,13 @@
         severity="secondary"
         @click="closeModal"
       ></Button>
-      <Button type="button" @click="saveLocation" :label="$t(`components.payment.list.setLocation`)" icon="pi pi-save" :loading="loading" />
+      <Button
+        type="button"
+        @click="saveLocation"
+        :label="$t(`components.payment.list.setLocation`)"
+        icon="pi pi-save"
+        :loading="loading"
+      />
     </div>
   </Dialog>
 </template>
@@ -45,7 +51,7 @@ const props = defineProps<{
   payment: Payment;
 }>();
 
-const loading = ref(false);
+const loading = ref<boolean>(false);
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean): void;
@@ -67,12 +73,13 @@ const closeModal = () => {
 };
 
 const saveLocation = async () => {
-    loading.value = true;
+  loading.value = true;
   try {
     props.payment.localization = selectedLocation.value.name;
     await updatePayment(props.payment.id, props.payment);
     refreshPayments();
     closeModal();
+    selectedLocation.value = null;
   } catch (e) {
     logger.error(e);
     throw e;

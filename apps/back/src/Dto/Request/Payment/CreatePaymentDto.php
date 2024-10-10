@@ -16,14 +16,17 @@ class CreatePaymentDto
     #[Assert\Type("float")]
     public float $amount;
 
+    #[Assert\NotBlank]
     #[Assert\Type("string")]
-    public ?string $label;
+    public string $label;
 
+    #[Assert\NotBlank]
     #[Assert\Type("string")]
-    public ?string $latitude;
+    public string $latitude;
 
+    #[Assert\NotBlank]
     #[Assert\Type("string")]
-    public ?string $longitude;
+    public string $longitude;
 
     #[Assert\Type("string")]
     public ?string $localization;
@@ -37,9 +40,9 @@ class CreatePaymentDto
     public function __construct(
         int $userId,
         float $amount,
-        ?string $label = null,
-        ?string $latitude = null,
-        ?string $longitude = null,
+        string $label,
+        string $latitude,
+        string $longitude,
         ?string $localization = null,
         ?string $createdAt = null
     ) {

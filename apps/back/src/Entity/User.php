@@ -15,6 +15,10 @@ class User implements UserInterface, \JsonSerializable, PasswordAuthenticatedUse
     #[ORM\Column(length: 180)]
     private string $password;
 
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(unique: true, type: 'integer')]
+    private int $user_id;
+
     /** @param array<string> $roles */
     public function __construct(
         #[ORM\Id]
@@ -23,11 +27,8 @@ class User implements UserInterface, \JsonSerializable, PasswordAuthenticatedUse
         #[ORM\Column(length: 180, unique: true)]
         private string $email,
 
-        #[ORM\Column(unique: true)]
-        private int $user_id,
-
         #[ORM\Column]
-        private array $roles = ['ROLE_USER'],
+        private array $roles = ['ROLE_USER']
     ) {
     }
 

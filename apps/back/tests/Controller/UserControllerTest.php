@@ -18,7 +18,7 @@ class UserControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            getenv('APP_PREFIX') . '/users',
+            getenv('APP_URL') . getenv('API_PREFIX') . '/1.0/users',
             [
                 'email' => 'test1@email.com',
                 'password' => 'test1password'

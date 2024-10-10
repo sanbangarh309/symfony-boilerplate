@@ -35,6 +35,17 @@ services:
       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - mysql_db:/var/lib/mysql
+    
+  mysql_test:
+    image: 'mariadb:11.1'
+    restart:  on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD_TEST}
+      MYSQL_DATABASE: ${DATABASE_NAME_TEST}
+      MYSQL_USER: ${DATABASE_USERNAME_TEST}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD_TEST}
+    volumes:
+      - mysql_db:/var/lib/mysql
 
   front:
     image: ${FRONT_IMAGE_NAME}:${DEPLOYMENT_TAG}
